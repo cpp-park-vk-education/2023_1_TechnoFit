@@ -14,5 +14,6 @@ void ResponseAdapter::write(std::vector<unsigned char>& data)
 {
     QByteArray qdata;
     std::copy(data.begin(), data.end(), std::back_inserter(qdata));
+    qInfo() << qdata;
     response_->write(qdata);
 }

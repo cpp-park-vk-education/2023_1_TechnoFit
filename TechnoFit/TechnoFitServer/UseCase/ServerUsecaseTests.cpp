@@ -24,7 +24,7 @@ TEST_F(ServerUsecaseTest, ProcessRequestTest){
     ServerUsecase usecase;
     std::vector<unsigned char> mockrequest;
     usecase.setRepository(mockrepository);
-    EXPECT_CALL(*mockrepository, formQuery(_));
-    usecase.ProcessRequest(mockrequest);
+    EXPECT_CALL(*mockrepository, formClientQuery(_));
+    usecase.ProcessClientRequest(mockrequest);
     delete mockrepository;
 }

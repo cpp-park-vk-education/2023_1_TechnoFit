@@ -5,5 +5,7 @@
 
 struct MockRepository : public IRepository
 {
-    MOCK_METHOD(std::string, formQuery, (std::vector<unsigned char>& request), (override));
+    MOCK_METHOD(std::string, formMLQuery, (std::vector<unsigned char>& request), (override));
+    MOCK_METHOD(std::string, formClientQuery, (std::vector<unsigned char>& request), (override));
+    MOCK_METHOD(std::string, formDeviceQuery, (std::vector<unsigned char>& request), (override));
 };

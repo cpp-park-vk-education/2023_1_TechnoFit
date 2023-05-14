@@ -11,11 +11,15 @@ class NetworkManager : public INetworkManager
 public:
     NetworkManager()
     {
-        networkmanager = new QNetworkAccessManager;
+        
     }
     ~NetworkManager() override
     {
         
+    }
+    void setQNetworkAccessManager(QNetworkAccessManager* networkmanager_)
+    {
+        networkmanager = networkmanager_;
     }
     void setMetricsNetwork(IMetricsNetwork* network)
     {

@@ -6,6 +6,8 @@
 #include "../Headers/Device.h"
 #include "../Headers/mainwindow.h"
 #include <memory>
+#include <thread>
+#include <chrono>
 
 class MetricsUseCase : public IMetricsUseCase, public IMetricsNetworkHandler
 {
@@ -21,10 +23,11 @@ public:
     }
     ~MetricsUseCase() override
     {
-
+        
     }
     void OnFetchStatistics(Device& device) override;
-    void RefreshData(int user_id) override; 
+    void RefreshData(int user_id) override;
+    void ThreadRefresher(int user_id) override; 
 private:
     IMetricsUI* ui;
     IMetricsNetwork* network_;

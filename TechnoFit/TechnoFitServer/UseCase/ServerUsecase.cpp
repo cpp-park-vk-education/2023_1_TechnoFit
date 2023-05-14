@@ -2,8 +2,20 @@
 
 
 
-std::string ServerUsecase::ProcessRequest(std::vector<unsigned char>& request) 
+std::string ServerUsecase::ProcessClientRequest(std::vector<unsigned char>& request) 
 {
-    return repository_->formQuery(request);
+    return repository_->formClientQuery(request);
 }
+
+std::string ServerUsecase::ProcessMLRequest(std::vector<unsigned char>& request) 
+{
+    return repository_->formMLQuery(request);
+}
+
+std::string ServerUsecase::ProcessDeviceRequest(std::vector<unsigned char>& request) 
+{
+    return repository_->formDeviceQuery(request);
+}
+
+
 

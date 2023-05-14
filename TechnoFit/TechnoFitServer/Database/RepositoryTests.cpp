@@ -25,6 +25,6 @@ TEST_F(RepositoryTest, formQueryTest){
     repository.setDatabaseDriver(mockdatabasedriver);
     std::vector<unsigned char> mockrequest;
     EXPECT_CALL(*mockdatabasedriver, get(_));
-    repository.formQuery(mockrequest);
+    repository.formClientQuery(mockrequest);
     delete mockdatabasedriver;
 }

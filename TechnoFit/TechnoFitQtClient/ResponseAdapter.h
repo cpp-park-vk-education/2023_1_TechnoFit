@@ -11,6 +11,10 @@ public:
     {
         
     }
+    void flush() override
+    {
+
+    }
     void SetReply(QNetworkReply* reply)
     {
         this->reply = reply;

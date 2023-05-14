@@ -31,7 +31,6 @@ TEST_F(NetworkManagerTest, getTest){
     std::function<void(IResponse&)> lambda = [network](IResponse& response){
         network->OnGetReply(response);
     };
-    //std::function<void(IResponse&)> q = [network, &response]() {network->OnGetReply(response);};
     manager.get(request, lambda);
     delete network;
 }

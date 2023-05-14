@@ -3,6 +3,7 @@
 #include "Headers/IMetricsUI.h"
 #include "UseCase/MetricsUseCase.h"
 #include "Network/MetricsNetwork.h"
+#include <QNetworkAccessManager>
 
 class AppRoot
 {
@@ -12,6 +13,7 @@ public:
         usecase_ = new MetricsUseCase();
         network_ = new MetricsNetwork();
         networkManager_ = new NetworkManager();
+        qnetworkmanager = new QNetworkAccessManager;
     }
     ~AppRoot()
     {
@@ -23,5 +25,6 @@ public:
     MetricsNetwork* network_;
     NetworkManager* networkManager_;
     MainWindow* ui_;
+    QNetworkAccessManager* qnetworkmanager;
 };
 

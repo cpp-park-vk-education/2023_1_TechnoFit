@@ -5,6 +5,7 @@
 #include <memory>
 #include "../UseCase/IMetricsUseCase.h"
 #include "../AppRoot.h"
+#include <QNetworkAccessManager>
 
 int main(int argc, char* argv[])
 {
@@ -16,8 +17,9 @@ int main(int argc, char* argv[])
     root.network_->setReplyHandler(root.usecase_);
     root.network_->setNetworkManager(root.networkManager_);
     root.networkManager_->setMetricsNetwork(root.network_);
+    root.networkManager_->setQNetworkAccessManager(root.qnetworkmanager);
     mw_.setUseCase(root.usecase_);
     mw_.show();
-    mw_.startrefresh();
+    mw_.RefreshGUIdata();
     return a.exec();
 }

@@ -27,7 +27,7 @@ TEST_F(DataHandlerTest, first){
     cdh.setUsecase(mockusecase);
     MockRequest request;
     MockResponse response;
-    EXPECT_CALL(*mockusecase, ProcessRequest(_));
+    EXPECT_CALL(*mockusecase, ProcessClientRequest(_));
     cdh.service(request, response);
     delete mockusecase;
 }

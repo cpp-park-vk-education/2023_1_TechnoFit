@@ -8,5 +8,7 @@
 
 struct MockUsecase : public IServerUsecase
 {
-    MOCK_METHOD(std::string, ProcessRequest, (std::vector<unsigned char>& request), (override));
+    MOCK_METHOD(std::string, ProcessDeviceRequest, (std::vector<unsigned char>& request), (override));
+    MOCK_METHOD(std::string, ProcessClientRequest, (std::vector<unsigned char>& request), (override));
+    MOCK_METHOD(std::string, ProcessMLRequest, (std::vector<unsigned char>& request), (override));
 };

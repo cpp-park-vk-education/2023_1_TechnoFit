@@ -9,6 +9,7 @@ std::string ResponseAdapter::GetStatus()
 std::vector<unsigned char> ResponseAdapter::GetBody() 
 {
     QByteArray data = reply->readAll();
+    qInfo() << data;
     const unsigned char* begin = reinterpret_cast<unsigned char*>(data.data());
     const unsigned char* end = begin + data.length();
     std::vector<unsigned char> body(begin, end);

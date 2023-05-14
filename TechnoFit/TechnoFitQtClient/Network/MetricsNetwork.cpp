@@ -2,29 +2,35 @@
 #include "../RequestAdapter.h"
 #include "../Headers/Device.h"
 #include <random>
+#include <sstream>
+#include <iostream>
 
 void MetricsNetwork::OnGetReply(IResponse& reply)
 {
     // parse reply
+    std::vector<unsigned char> vc = reply.GetBody();
+    std::string str(vc.begin(),vc.end());
+    std::cout << str << std::endl;
+    std::stringstream iss(str);
     Device device;
-    std::random_device random_device;
-    std::mt19937 generator(random_device());
-    std::uniform_int_distribution<> distribution_for_pulse(60, 150);
-    std::uniform_int_distribution<> distribution_for_O2(80, 100);
-    std::uniform_int_distribution<> distribution_for_temprature(35, 40);
-    device.set_O2(distribution_for_O2(generator));
-    device.set_pulse(distribution_for_pulse(generator));
-    device.set_temprature(distribution_for_temprature(generator));
+    float a;
     device.set_name("arduino");
+    iss >> a;
+    device.set_pulse(a);
+    iss >> a;
+    device.set_O2(a);
+    iss >> a;
+    device.set_temprature(a);
     replyHandler_->OnFetchStatistics(device);
 }
 
 void MetricsNetwork::FetchStatistics(int user_id) 
 {
     RequestAdapter request;
+    std::string url = "http://localhost:8080/refresh";
+    request.SetUrl(url);
     std::function<void(IResponse&)> lambda = [this](IResponse& reply){
         OnGetReply(reply);
     };
-    //формируется реквест, делается гет запрос
     networkManager_->get(request, lambda);
 }

@@ -1,4 +1,3 @@
-
 #include "../Headers/Device.h"
 
 float Device::get_O2() 

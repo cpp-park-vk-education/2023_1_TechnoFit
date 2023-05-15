@@ -1,20 +1,19 @@
 #include "RequestAdapter.h"
 
 
-
 void RequestAdapter::SetHeader(std::string header)
 {
-    3;
+    return;
 }
 
 void RequestAdapter::SetUrl(std::string url)
 {
-    3;
+    return;
 }
 
 void RequestAdapter::SetBody(std::vector<unsigned char>& body)
 {
-    3;
+    return;
 }
 
 std::vector<unsigned char>& RequestAdapter::GetBody()

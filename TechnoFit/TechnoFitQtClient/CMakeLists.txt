@@ -70,7 +70,6 @@ add_executable(QtClientTest
     ResponseAdapter.h
     ResponseAdapter.cpp
     )
-#Sources/mainwindowTests.cpp
-target_link_libraries(QtClientTest -lgtest -lgmock Qt6::Widgets Qt6::Gui  Qt6::Network Qt6::Core)
 
+target_link_libraries(QtClientTest -lgtest -lgmock Qt6::Widgets Qt6::Gui  Qt6::Network Qt6::Core)
 target_link_libraries(QtClient Qt6::Widgets Qt6::Gui  Qt6::Network Qt6::Core)

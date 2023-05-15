@@ -10,11 +10,10 @@ void DeviceDataHandler::service(IRequest &request, IResponse &response)
     // ....
 
     //  сохраняет их в бд
-    //....
+    // ....
     std::vector<unsigned char>& vc = request.GetBody();
     std::string reply_ = usecase_->ProcessDeviceRequest(vc);
     std::cout << reply_ << std::endl;
-    //QByteArray statustext = "OK";
     response.flush();
 }
 

@@ -8,7 +8,6 @@ struct MockMetricsUseCase : public IMetricsUseCase, public IMetricsNetworkHandle
 {
     MOCK_METHOD(void, OnFetchStatistics, (Device& device), (override));
     MOCK_METHOD(void, RefreshData, (int user_id), (override));
-    MOCK_METHOD(void, ThreadRefresher, (int user_id), (override));
     ~MockMetricsUseCase() override
     {
 

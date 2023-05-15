@@ -15,6 +15,8 @@ public:
     virtual void set_params(float pulse, float O2, float temprature, QString name) = 0;
 };
 
+
+
 class Device : public IDevice
 {
 public:

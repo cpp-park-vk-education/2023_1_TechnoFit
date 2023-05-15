@@ -27,7 +27,6 @@ public:
     }
     void OnFetchStatistics(Device& device) override;
     void RefreshData(int user_id) override;
-    void ThreadRefresher(int user_id) override; 
 private:
     IMetricsUI* ui;
     IMetricsNetwork* network_;

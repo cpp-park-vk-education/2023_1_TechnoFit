@@ -7,7 +7,6 @@
 
 void MetricsNetwork::OnGetReply(IResponse& reply)
 {
-    // parse reply
     std::vector<unsigned char> vc = reply.GetBody();
     std::string str(vc.begin(),vc.end());
     std::cout << str << std::endl;

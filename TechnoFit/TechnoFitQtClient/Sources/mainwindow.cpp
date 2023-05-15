@@ -1,6 +1,8 @@
 #include <QPixmap>
 #include "../Headers/mainwindow.h"
 #include "ui_mainwindow.h"
+
+
 void plot_axis(QGraphicsScene* scene, QPen& pen, QPointF origin)
 {
     qInfo() << origin.x() << origin.y();
@@ -54,6 +56,7 @@ void plot_grid(QGraphicsScene* scene, QPointF origin, qreal sx, qreal sy, QPen& 
         coordtext->setPos(sceneidvalue.x(), sceneidvalue.y());
 	}	
 }
+
 void plot(QGraphicsScene* scene, QPen& axis_pen, QPen& graph_pen, QPen& grid_pen, qreal y_min, qreal y_max, qreal x_min, qreal x_max, QVector<QPointF>& points, qreal time, int counter)
 {
     scene->clear();
@@ -101,12 +104,12 @@ void plot(QGraphicsScene* scene, QPen& axis_pen, QPen& graph_pen, QPen& grid_pen
     }
 }
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     QPixmap pix1(":/img/img/icons8-сердце-с-пульсом-48.png");
     int w = ui->pic1_pulse->width() + 20;
     int h = ui->pic1_pulse->height() + 20;
@@ -120,8 +123,6 @@ MainWindow::MainWindow(QWidget *parent) :
     h = ui->pic3_Temprature->height() + 20;
     ui->pic3_Temprature->setPixmap(pix3.scaled(w,h,Qt::KeepAspectRatio));
     startrefresh();
-    // график данных
-
     scene_pulse = new QGraphicsScene(0, 0, 710, 150, this);
     scene_O2 = new QGraphicsScene(0, 0, 710, 150, this);
     scene_temprature = new QGraphicsScene(0, 0, 710, 150, this);
@@ -185,7 +186,6 @@ void MainWindow::UpdateResults(Device &result)
 
 void MainWindow::RefreshGUIdata()
 {
-    //usecase_->ThreadRefresher(22);
     usecase_->RefreshData(22);
 }
 

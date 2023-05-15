@@ -15,8 +15,8 @@ add_executable(Technofit
 	global.h
 	ClientAppRoot.h
 	main.cpp
-	Handlers/RequestHandler.cpp
-	Handlers/RequestHandler.h
+	Handlers/RequestRouter.cpp
+	Handlers/RequestRouter.h
 	Handlers/IHandler.h
 	Handlers/DataHandlers.h
 	Handlers/DataHandlers.cpp
@@ -48,7 +48,6 @@ add_executable(TechnofitTest
 	Database/IDataBaseDriver.h
 	Database/DataBaseDriver.h
 	Database/DataBaseDriver.cpp
-	Database/DataBaseDriverTests.cpp
 	UseCase/IServerUsecase.h
 	UseCase/ServerUsecase.h
 	UseCase/ServerUsecase.cpp

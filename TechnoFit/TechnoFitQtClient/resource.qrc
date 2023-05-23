@@ -3,5 +3,8 @@
         <file>img/icons8-сердце-с-пульсом-48.png</file>
         <file>img/icons8-температура-64.png</file>
         <file>img/icons8-кислород-64.png</file>
+        <file>img/icons8-ecg-64.png</file>
+        <file>img/icons8-tonometer-64.png</file>
+       
     </qresource>
 </RCC>

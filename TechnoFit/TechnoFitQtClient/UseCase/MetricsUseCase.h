@@ -5,6 +5,7 @@
 #include "IMetricsNetworkHandler.h"
 #include "../Headers/Device.h"
 #include "../Headers/mainwindow.h"
+
 #include <memory>
 #include <thread>
 #include <chrono>
@@ -25,9 +26,13 @@ public:
     {
         
     }
-    void OnFetchStatistics(Device& device) override;
-    void RefreshData(int user_id) override;
+    void OnFetchStatistics(IDevice& device) override;
+    void RefreshData(int user_id, State state) override;
+    void createDevice(State state) override;
+    void change_graph(int id, State type) override;
 private:
     IMetricsUI* ui;
     IMetricsNetwork* network_;
+    Dialog* dialog;
+    QVector<DeviceCard*> devices;
 };

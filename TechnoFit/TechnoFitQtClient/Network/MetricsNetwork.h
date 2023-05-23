@@ -15,7 +15,7 @@ public:
     ~MetricsNetwork() override
     {
     }
-    void FetchStatistics(int user_id) override;
+    void FetchStatistics(int user_id, int type) override;
     void OnGetReply(IResponse& reply) override;
     void setNetworkManager(INetworkManager* networkManager)
     {

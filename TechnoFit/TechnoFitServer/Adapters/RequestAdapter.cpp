@@ -22,6 +22,22 @@ std::vector<unsigned char>& RequestAdapter::GetBody()
     return vc;
 }
 
+std::vector<unsigned char> RequestAdapter::getParameter(const std::string& name)
+{
+    QByteArray qdata;
+    QByteArray bytename(name.c_str(), name.length());
+    qdata = request_->getParameter(bytename);
+    const unsigned char* begin = reinterpret_cast<unsigned char*>(qdata.data());
+    const unsigned char* end = begin + qdata.length();
+    std::vector<unsigned char> params( begin, end );  
+    for(auto i = params.cbegin(); i != params.cend(); i++)
+    {
+        qInfo() << *i;
+    }
+    qInfo() << qdata;
+    return params;
+}
+
 std::string RequestAdapter::GetUrl()
 {
     return "OK";

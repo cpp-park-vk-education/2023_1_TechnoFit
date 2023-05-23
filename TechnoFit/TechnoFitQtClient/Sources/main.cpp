@@ -18,8 +18,10 @@ int main(int argc, char* argv[])
     root.network_->setNetworkManager(root.networkManager_);
     root.networkManager_->setMetricsNetwork(root.network_);
     root.networkManager_->setQNetworkAccessManager(root.qnetworkmanager);
+    root.dialog->setUseCase(root.usecase_);
+    mw_.setDialog(root.dialog);
     mw_.setUseCase(root.usecase_);
     mw_.show();
-    mw_.RefreshGUIdata();
+    //mw_.RefreshGUIdata();
     return a.exec();
 }

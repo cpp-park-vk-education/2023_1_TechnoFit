@@ -12,7 +12,7 @@ public:
     }
     void connect() override;
     void close() override;
-    std::string get(std::string query) override;
+    std::string get(std::string query, int id) override;
     void save() override;
 private:
 };

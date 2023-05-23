@@ -6,7 +6,7 @@
 class Repository : public IRepository
 {
 public:
-    std::string formClientQuery(std::vector<unsigned char>& request) override;
+    std::string formClientQuery(std::vector<unsigned char>& id, std::vector<unsigned char>& type) override;
     std::string formDeviceQuery(std::vector<unsigned char>& request) override;
     std::string formMLQuery(std::vector<unsigned char>& request) override;
     void setDatabaseDriver(IDataBaseDriver* databasedriver)

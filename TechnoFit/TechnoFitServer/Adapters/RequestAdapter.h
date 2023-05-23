@@ -19,6 +19,7 @@ public:
     std::vector<unsigned char>& GetBody() override;
     std::string GetUrl() override;
     std::string GetHeader() override;
+    std::vector<unsigned char> getParameter(const std::string& name) override;
 private:
     qtwebapp::HttpRequest* request_;
 };

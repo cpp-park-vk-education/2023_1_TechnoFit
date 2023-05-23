@@ -2,9 +2,11 @@
 
 
 
-std::string ServerUsecase::ProcessClientRequest(std::vector<unsigned char>& request) 
+std::string ServerUsecase::ProcessClientRequest(std::vector<unsigned char>& id, std::vector<unsigned char>& type) 
 {
-    return repository_->formClientQuery(request);
+    // std::string reply = "ok";
+    // return reply;
+    return repository_->formClientQuery(id, type);
 }
 
 std::string ServerUsecase::ProcessMLRequest(std::vector<unsigned char>& request) 

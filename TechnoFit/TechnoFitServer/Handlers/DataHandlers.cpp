@@ -19,8 +19,9 @@ void DeviceDataHandler::service(IRequest &request, IResponse &response)
 
 void ClientDataHandler::service(IRequest &request, IResponse &response)
 {
-    std::vector<unsigned char>& vc = request.GetBody();
-    std::string reply_ = usecase_->ProcessClientRequest(vc);
+    auto id = request.getParameter("id");
+    auto type = request.getParameter("type");
+    std::string reply_ = usecase_->ProcessClientRequest(id, type);
     std::cout << reply_ << std::endl;
     std::vector<unsigned char> reply(reply_.begin(), reply_.end());
     for(auto i = reply.cbegin(); i != reply.cend(); i++)

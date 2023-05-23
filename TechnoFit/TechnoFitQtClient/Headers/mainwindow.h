@@ -4,9 +4,13 @@
 #include <QString>
 #include <QTimer>
 #include "Device.h"
+#include "header.h"
 #include "../UseCase/IMetricsUseCase.h"
 #include "IMetricsUI.h"
+#include "dialog.h"
+#include "../Sources/ui_dialog.h"
 #include "../UseCase/MetricsUseCase.h"
+#include "DeviceCard.h"
 #include <memory>
 #include <QPainter>
 #include <QPoint>
@@ -28,26 +32,35 @@ class MainWindow : public QMainWindow, public IMetricsUI
 public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
-    void UpdateResults(Device &result) override;
+    void UpdateResults(IDevice &result) override;
     void setUseCase(IMetricsUseCase* usecase);
+    void setDialog(Dialog* dialog_);
     void startrefresh();
+    void createDevice(State state) override;
+    void change_graph(int id, State type) override;
+    void refresh_graph();
+private slots:
+    void on_add_device_btn_clicked();
 public slots:
     void RefreshGUIdata();
 private:
     Ui::MainWindow* ui;
-    QThread refresherThread;
+    Dialog* dialog;
     IMetricsUseCase* usecase_;
     QGraphicsScene* scene_pulse;
     QGraphicsScene* scene_O2;
     QGraphicsScene* scene_temprature;
-    QVector<QPointF> pulse_points;
-    QVector<QPointF> O2_points;
-    QVector<QPointF> temprature_points;
+    QGraphicsScene* scene_ECG;
+    QVector<DeviceCard*> devices;
     qreal time;
     QPen axis_pen;
     QPen pulse_graph_pen;
     QPen O2_graph_pen;
     QPen temprature_graph_pen;
     QPen grid_pen;
+    int id;
+    State type;
     int counter = 0;
+    int element_counter = 0;
+    bool builded = false;
 };

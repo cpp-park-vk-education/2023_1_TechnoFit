@@ -12,5 +12,6 @@ public:
     virtual std::vector<unsigned char>& GetBody() = 0;
     virtual std::string GetUrl() = 0;
     virtual std::string GetHeader() = 0;
+    virtual std::vector<unsigned char> getParameter(const std::string& name) = 0;
 };
 

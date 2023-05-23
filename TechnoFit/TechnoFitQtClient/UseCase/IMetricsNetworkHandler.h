@@ -4,5 +4,5 @@
 class IMetricsNetworkHandler
 {
 public:
-    virtual void OnFetchStatistics(Device& device) = 0;
+    virtual void OnFetchStatistics(IDevice& device) = 0;
 };

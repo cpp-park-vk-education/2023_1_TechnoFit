@@ -20,11 +20,16 @@ find_package(Qt6 REQUIRED COMPONENTS Core)
 add_executable(QtClient
     Sources/mainwindow.ui
     Sources/mainwindow.cpp
+    Sources/dialog.ui
     Sources/main.cpp
+    Sources/dialog.cpp
     resource.qrc
-    Sources/Device.cpp
     Headers/mainwindow.h
+    Headers/header.h
+    Headers/dialog.h
     Headers/Device.h
+    Headers/DeviceCard.h
+    Headers/Sensors.h
     UseCase/IMetricsUseCase.h
     UseCase/MetricsUseCase.h
     UseCase/MetricsUseCase.cpp
@@ -47,6 +52,7 @@ add_executable(QtClient
 add_executable(QtClientTest
     Sources/main_test.cpp
     Headers/mainwindow.h
+    Headers/Device.h
     Sources/mainwindow.cpp
     Network/NetworkManager.h
     Network/NetworkManager.cpp
@@ -57,19 +63,18 @@ add_executable(QtClientTest
     UseCase/MetricsUseCase.h
     UseCase/MetricsUseCase.cpp
     UseCase/MetricsUseCaseTests.cpp
-     Mocks/MockMetricsNetwork.h
+    Mocks/MockMetricsNetwork.h
     Mocks/MockMetricsUI.h
     Mocks/MockMetricsUseCase.h
     Mocks/MockNetworkManager.h
     Mocks/MockRequest.h
     Mocks/MockResponse.h
-    Headers/Device.h
-    Sources/Device.cpp
     RequestAdapter.h
     RequestAdapter.cpp
     ResponseAdapter.h
     ResponseAdapter.cpp
     )
+
 
 target_link_libraries(QtClientTest -lgtest -lgmock Qt6::Widgets Qt6::Gui  Qt6::Network Qt6::Core)
 target_link_libraries(QtClient Qt6::Widgets Qt6::Gui  Qt6::Network Qt6::Core)

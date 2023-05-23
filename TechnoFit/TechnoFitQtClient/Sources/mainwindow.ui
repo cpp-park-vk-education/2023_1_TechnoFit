@@ -10,6 +10,11 @@
     <height>986</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>14</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Technofit</string>
   </property>
@@ -169,7 +174,7 @@ border:none;</string>
      <x>0</x>
      <y>0</y>
      <width>1370</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
   </widget>

@@ -28,6 +28,7 @@ public:
 	"border: 1px solid rgb(246, 245, 244);"
 	"border-radius: 10px;"
 	"border-width: 5px;"
+    "font: 20pt;"
 "}"
 "QPushButton:hover"
 "{"

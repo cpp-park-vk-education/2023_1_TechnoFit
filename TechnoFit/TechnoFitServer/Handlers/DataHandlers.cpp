@@ -1,4 +1,5 @@
 #include "DataHandlers.h"
+#include "MlPredict.h"
 #include <iostream>
 
 void DeviceDataHandler::service(IRequest &request, IResponse &response)
@@ -28,9 +29,14 @@ void ClientDataHandler::service(IRequest &request, IResponse &response)
 
 void ClientMLHandler::service(IRequest &request, IResponse &response)
 {
+
+    std::vector<double> data = usecase_->ProcessMLRequest();
+
     // получает запрос от клиента на прогнозирование данных 
+    MlPredict ans = *new MlPredict(data);
+    std::string reply = std::to_string(ans.pulse_predict()) + " " + std::to_string(ans.O2_predict()) + " " + std::to_string(ans.temperarute_predict());
 
-    // вызывает функцию которая прогнозируется данные и отдаёт их
-
+  // вызывает функцию которая прогнозируется данные и отдаёт их
+    response.write(reply);
     // преобразует в json отправляет клиенту
 }

@@ -35,7 +35,7 @@ add_executable(Technofit
 	Adapters/ResponseAdapter.cpp
 	../IRequest.h
 	../IResponse.h
-)
+        Handlers/MlPredict.cpp Handlers/MlPredict.h)
 add_executable(TechnofitTest
 	main_test.cpp
 	Handlers/DataHandlers.h

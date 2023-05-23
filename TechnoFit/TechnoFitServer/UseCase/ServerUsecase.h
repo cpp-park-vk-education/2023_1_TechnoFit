@@ -5,12 +5,14 @@
 
 class ServerUsecase : public IServerUsecase
 {
-public:
-    std::string ProcessRequest(std::vector<unsigned char>& request) override;
-	void setRepository(IRepository* repository)
-    {
-        repository_ = repository;
-    }
-private:
-    IRepository* repository_;
+ public:
+  std::string ProcessClientRequest(std::vector<unsigned char>& request) override;
+  std::string ProcessDeviceRequest(std::vector<unsigned char>& request) override;
+  std::vector<double> ProcessMLRequest(std::vector<unsigned char>& request) override;
+  void setRepository(IRepository* repository)
+  {
+    repository_ = repository;
+  }
+ private:
+  IRepository* repository_;
 };

@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-class MlPredict{
+class Ml {
  public:
-  explicit MlPredict(const std::vector<double>&ans);
-  static std::vector<double> movingAverage(const std::vector<double>& x, int windowSize);
+  explicit Ml(const std::vector<double> &ans);
+  static std::vector<double> movingAverage(const std::vector<double> &x, int windowSize);
   double pulse_predict();
   double O2_predict();
   double temperarute_predict();

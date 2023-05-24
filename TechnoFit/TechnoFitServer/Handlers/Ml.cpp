@@ -1,13 +1,13 @@
 #include <cmath>
 #include <vector>
-#include "MlPredict.h"
+#include "Ml.h"
 
-MlPredict::MlPredict(const std::vector<double>&ans){
-  for (double  l:ans){
+Ml::Ml(const std::vector<double> &input) {
+  for (double l: input) {
     data.push_back(l);
   }
 }
-std::vector<double> MlPredict::movingAverage(const std::vector<double>& x, int windowSize) {
+std::vector<double> Ml::movingAverage(const std::vector<double> &x, int windowSize) {
   std::vector<double> predictions;
   for (int i = windowSize; i < x.size(); i++) {
     double sum = 0;
@@ -20,7 +20,7 @@ std::vector<double> MlPredict::movingAverage(const std::vector<double>& x, int w
   return predictions;
 }
 
-double MlPredict::pulse_predict(){
+double Ml::pulse_predict() {
   std::vector<double> x;
   for (int i = 0; i < 15; i += 3) {
     x.push_back(data[i]);
@@ -29,20 +29,20 @@ double MlPredict::pulse_predict(){
   return ans[0];
 }
 
-double MlPredict::O2_predict(){
+double Ml::O2_predict() {
   std::vector<double> x;
   for (int i = 1; i < 15; i += 3) {
     x.push_back(data[i]);
   }
-  std::vector<double> ans = movingAverage(x,4);
+  std::vector<double> ans = movingAverage(x, 4);
   return ans[0];
 }
 
-double MlPredict::temperarute_predict(){
+double Ml::temperarute_predict() {
   std::vector<double> x;
   for (int i = 2; i < 15; i += 3) {
     x.push_back(data[i]);
   }
-  std::vector<double> ans = movingAverage(x,4);
+  std::vector<double> ans = movingAverage(x, 4);
   return ans[0];
 }

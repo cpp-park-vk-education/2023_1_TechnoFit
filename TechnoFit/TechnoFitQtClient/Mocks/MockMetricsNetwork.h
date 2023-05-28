@@ -7,7 +7,7 @@
 
 struct MockMetricsNetwork : public IMetricsNetwork
 {
-    MOCK_METHOD(void, FetchStatistics, (int user_id), (override));
+    MOCK_METHOD(void, FetchStatistics, (int user_id, int type), (override));
     MOCK_METHOD(void, OnGetReply, (IResponse& reply), (override));
     ~MockMetricsNetwork() override
     {

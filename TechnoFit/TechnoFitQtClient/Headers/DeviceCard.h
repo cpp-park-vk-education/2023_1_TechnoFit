@@ -11,6 +11,7 @@ public:
         this->state = state;
         this->id = id;
         this->usecase_ = usecase;
+
         QPointF first(0,70);
         pulse_points.append(first);
         O2_points.append(first);
@@ -28,7 +29,7 @@ public:
 	"border: 1px solid rgb(246, 245, 244);"
 	"border-radius: 10px;"
 	"border-width: 5px;"
-    "font: 20pt;"
+    "font: 16pt;"
 "}"
 "QPushButton:hover"
 "{"
@@ -36,16 +37,28 @@ public:
 "	border: 1px solid rgb(222, 221, 218);"
 "	border-radius: 10px;"
 "}");
+        this->setStyleSheet("border: 1px solid grey; border-radius: 5px;");
         pulselabel = new QLabel(": 0");
+        pulselabel->setStyleSheet("border: none");
         O2label = new QLabel(": 0");
+        O2label->setStyleSheet("border: none");
         tempraturelabel = new QLabel(": 0");
+        tempraturelabel->setStyleSheet("border: none");
         ECGlabel = new QLabel(": 0");
+        ECGlabel->setStyleSheet("border: none");
         BloodPressurelabel = new QLabel(": 0");
+        BloodPressurelabel->setStyleSheet("border: none");
         pulsepicture = new QLabel(); 
+        pulsepicture->setStyleSheet("border: none");
         O2picture = new QLabel();
+        O2picture->setStyleSheet("border: none");
         tempraturepicture = new QLabel();
-        ECGpicture = new QLabel("test");
-        BloodPressurepicture = new QLabel("test");
+        tempraturepicture->setStyleSheet("border: none");
+        ECGpicture = new QLabel(": 0");
+        ECGpicture->setStyleSheet("border: none");
+        BloodPressurepicture = new QLabel(": 0");
+        BloodPressurepicture->setStyleSheet("border: none");
+
         QPixmap pix1(":/img/img/icons8-сердце-с-пульсом-48.png");
         int w = 40;
         int h = 40;
@@ -64,6 +77,7 @@ public:
         {
         case Standard:
         {
+            this->setStyleSheet(styleSheet().append("background-color: rgb(80, 200, 120);"));
             auto field_pulse_layout = new QHBoxLayout(this);
             auto field_O2_layout = new QHBoxLayout(this);
             main_layout->addWidget(name_btn);
@@ -81,6 +95,8 @@ public:
             
         case Intensive:
         {
+            //this->setStyleSheet(styleSheet().append("background-color: rgb(156, 247, 182);"));
+            this->setStyleSheet(styleSheet().append("background-color: rgb(230, 230, 250);"));
             auto field_ECG_layout = new QHBoxLayout(this);
             main_layout->addWidget(name_btn);
             main_layout->addLayout(field_temprature_layout);
@@ -93,6 +109,7 @@ public:
         }
         case Premium:
         {
+            this->setStyleSheet(styleSheet().append("background-color: rgb(244, 228, 137);"));
             auto field_pulse_layout = new QHBoxLayout(this);
             auto field_O2_layout = new QHBoxLayout(this);
             auto field_ECG_layout = new QHBoxLayout(this);
@@ -147,6 +164,9 @@ public:
     QVector<QPointF> BloodPressure_points;
     State state;
     int id;
+    int age;
+    int weight;
+    int kcal = 0;
 private:
 
 };

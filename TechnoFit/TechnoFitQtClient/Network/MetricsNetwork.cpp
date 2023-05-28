@@ -10,7 +10,6 @@ void MetricsNetwork::OnGetReply(IResponse& reply)
 {
     std::vector<unsigned char> vc = reply.GetBody();
     std::string str(vc.begin(),vc.end());
-    std::cout << str << std::endl;
     std::stringstream iss(str);
     float a;
     iss >> a;

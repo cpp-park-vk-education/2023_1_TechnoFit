@@ -25,7 +25,7 @@ void plot_grid(QGraphicsScene* scene, QPointF origin, qreal sx, qreal sy, QPen& 
 	for (; x_pix < scene->width(); x_pix += scene->width()/10)
 	{
 		scene->addLine(x_pix, 0, x_pix, scene->height(), pen);
-		QString _coord = QString::number((x_pix - origin.x()) * sx);
+		QString _coord = QString::number(static_cast<int>((x_pix - origin.x()) * sx));
 		QPointF sceneidvalue(x_pix + 2, 430);
 		auto coordtext = scene->addText(_coord);
         coordtext->setPos(sceneidvalue.x(), sceneidvalue.y());
@@ -33,7 +33,7 @@ void plot_grid(QGraphicsScene* scene, QPointF origin, qreal sx, qreal sy, QPen& 
 	for (; x_pix > 0; x_pix -= scene->width() / 10)
 	{
 		scene->addLine(x_pix, 0, x_pix, scene->height(), pen);
-		QString _coord = QString::number((x_pix - origin.x()) * sx);
+		QString _coord = QString::number(static_cast<int>((x_pix - origin.x()) * sx));
 		QPointF sceneidvalue(x_pix + 2, 430);
         auto coordtext = scene->addText(_coord);
         coordtext->setPos(sceneidvalue.x(), sceneidvalue.y());
@@ -42,7 +42,7 @@ void plot_grid(QGraphicsScene* scene, QPointF origin, qreal sx, qreal sy, QPen& 
 	for (; y_pix <= scene->height(); y_pix += scene->width() / 10)
 	{
 		scene->addLine(0, y_pix, scene->width(), y_pix, pen);
-		QString _coord = QString::number((y_pix - origin.y()) * -sy);
+		QString _coord = QString::number(static_cast<int>((y_pix - origin.y()) * -sy));
 		QPointF sceneidvalue(2, y_pix + 2);
         auto coordtext = scene->addText(_coord);
         coordtext->setPos(sceneidvalue.x(), sceneidvalue.y());
@@ -50,7 +50,7 @@ void plot_grid(QGraphicsScene* scene, QPointF origin, qreal sx, qreal sy, QPen& 
 	for (; y_pix > 0; y_pix -= scene->width() / 10)
 	{
 		scene->addLine(0, y_pix, scene->width(), y_pix, pen);
-		QString _coord = QString::number((y_pix - origin.y()) * -sy);
+		QString _coord = QString::number(static_cast<int>((y_pix - origin.y()) * -sy));
 		QPointF sceneidvalue(2 , y_pix + 2);
         auto coordtext = scene->addText(_coord);
         coordtext->setPos(sceneidvalue.x(), sceneidvalue.y());
@@ -111,9 +111,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     startrefresh();
-    QPixmap pix1(":/img/img/icons8-сердце-с-пульсом-48.png");
+    ui->kcal_label->setAttribute(Qt::WA_NoSystemBackground);
+    layoutwidget = new HorizontalScrollArea(this);
+    ui->scrollArea->setWidget(layoutwidget);
+    ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     int w = 40;
     int h = 40;
+    QPixmap pix1(":/img/img/icons8-сердце-с-пульсом-48.png");
     ui->pulse_pic->setPixmap(pix1.scaled(w,h,Qt::KeepAspectRatio));
     QPixmap pix2(":/img/img/icons8-кислород-64.png");
     ui->O2_pic->setPixmap(pix2.scaled(w,h,Qt::KeepAspectRatio));
@@ -121,6 +125,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->temprature_pic->setPixmap(pix3.scaled(w,h,Qt::KeepAspectRatio));
     QPixmap pix4(":/img/img/icons8-ecg-64.png");
     ui->ECG_pic->setPixmap(pix4.scaled(w,h,Qt::KeepAspectRatio));
+    QPixmap pix5(":/img/img/icons8-сердце-с-пульсом-48.png");
+    QPixmap pix6(":/img/img/icons8-огонь-40.png");
+    ui->kcal_pic->setPixmap(pix6.scaled(w,h,Qt::KeepAspectRatio));
+    ui->pulse_zone_pic->setPixmap(pix5.scaled(w,h,Qt::KeepAspectRatio));
     scene_pulse = new QGraphicsScene(0, 0, 485, 155, this);
     scene_O2 = new QGraphicsScene(0, 0, 485, 155, this);
     scene_temprature = new QGraphicsScene(0, 0, 485, 155, this);
@@ -133,11 +141,23 @@ MainWindow::MainWindow(QWidget *parent) :
     scene_O2->addRect(scene_O2->sceneRect());
     scene_temprature->addRect(scene_temprature->sceneRect());
     scene_ECG->addRect(scene_ECG->sceneRect());
+    scene_pulse->clear();
+    scene_temprature->clear();
+    scene_O2->clear();
+    scene_ECG->clear();
     axis_pen.setColor(Qt::black);
     grid_pen.setColor(Qt::gray);
     pulse_graph_pen.setColor(Qt::red);
     O2_graph_pen.setColor(Qt::blue);
     temprature_graph_pen.setColor(Qt::red);
+    ui->ECG_pic->setVisible(false);
+    ui->pulse_pic->setVisible(false);
+    ui->O2_pic->setVisible(false);
+    ui->ECG_graph_label->setVisible(false);
+    ui->pulse_graph_label->setVisible(false);
+    ui->oxygen_graph_label->setVisible(false);
+    ui->temprature_graph_label->setVisible(false);
+    ui->temprature_pic->setVisible(false);
 }
 MainWindow::~MainWindow()
 {
@@ -156,7 +176,6 @@ void MainWindow::setDialog(Dialog* dialog_)
 
 void MainWindow::UpdateResults(IDevice &result)
 {
-    std::cout << "we came to update results" << std::endl;
     if(time > 20)
     {
         time++;
@@ -220,11 +239,64 @@ void MainWindow::UpdateResults(IDevice &result)
 void MainWindow::RefreshGUIdata()
 {
     if(builded)
+    {
         refresh_graph();
+        refresh_zone();
+    }   
     for(int i = 0; i < devices.size(); i++)
-        usecase_->RefreshData(i, devices[i]->state); // 
+        usecase_->RefreshData(i, devices[i]->state);
 }
 
+void MainWindow::refresh_zone()
+{
+    int age = devices[id]->age;
+    int weight = devices[id]->weight;
+    int min_pulse = std::numeric_limits<int>::max();
+    int pulse = devices[id]->pulse_points.back().y();
+    for(int i = 0; i < devices[id]->pulse_points.size(); i++)
+    {
+        if (devices[id]->pulse_points[i].y() >= 50 && devices[id]->pulse_points[i].y() < min_pulse) 
+        {
+            min_pulse = devices[id]->pulse_points[i].y();
+        }
+    }
+    Zone zone = pulse_zone(age, min_pulse, pulse);
+    switch(zone)
+    {
+    case LightWeight:
+        ui->color_label->setStyleSheet("background-color: #8088C0; color: #383f5d;"
+         "border: 1px white solid; border-radius: 10px; font: 18pt;");
+        ui->color_label->setText("Recovery zone");
+        break;
+    case Fatburning:
+        ui->color_label->setStyleSheet("background-color: #6f996a; color: #285d40;"
+        "border: 1px white solid; border-radius: 10px; font: 18pt;");
+        ui->color_label->setText("Burning fat zone");
+        break;
+    case Airobe:
+        ui->color_label->setStyleSheet("background-color: #edc557; color : #c9850f;"
+        "border: 1px white solid; border-radius: 10px;font: 18pt;");
+        ui->color_label->setText("Aerobic zone");
+        break;
+    case Anarob:
+        ui->color_label->setStyleSheet("background-color: #f0a657; color: #a4430e;"
+        "border: 1px white solid; border-radius: 10px;font: 18pt;");
+        ui->color_label->setText("Anaerobic zone");
+        break;
+    case VO2:
+        ui->color_label->setStyleSheet("background-color: #de8d8d; color: #8f3b3b;"
+        "border: 1px white solid; border-radius: 10px;font: 18pt;");
+        ui->color_label->setText("VO2 zone");
+        break;
+    case Maximum:
+        ui->color_label->setStyleSheet("background-color: #b7b7b7; color: #565656;"
+        "border: 1px white solid; border-radius: 10px;font: 18pt;");
+        ui->color_label->setText("Maximum zone");
+        break;
+    }
+    devices[id]->kcal += calories(weight, pulse, age);
+    ui->kcal_label->setText(QString::number(devices[id]->kcal) + "  kcal");
+} 
 void MainWindow::startrefresh()
 {
     QTimer* timer = new QTimer(this);
@@ -238,33 +310,42 @@ void MainWindow::on_add_device_btn_clicked()
     dialog->show();
 }
 
-void MainWindow::createDevice(State state)
+void MainWindow::createDevice(State state, QString name, int age, float weight)
 {
     switch(state)
     {
     case Standard:
     {
-        auto widget = new DeviceCard("test", element_counter, state, usecase_, this);
+        auto widget = new DeviceCard(name, element_counter, state, usecase_, this);
         widget->setFixedSize(200,250);
-        ui->add_layout->insertWidget(element_counter, widget);
+        widget->setMaximumSize(200,250);
+        widget->age = age;
+        widget->weight = weight;
+        layoutwidget->insertWidget(element_counter, widget);
         devices.push_back(widget);
         show();
         break;
     }
     case Intensive:
     {
-        auto widget = new DeviceCard("test", element_counter, state, usecase_, this);
+        auto widget = new DeviceCard(name, element_counter, state, usecase_, this);
         widget->setFixedSize(200,250);
-        ui->add_layout->insertWidget(element_counter, widget);
+        widget->setMaximumSize(200,250);
+        widget->age = age;
+        widget->weight = weight;
+        layoutwidget->insertWidget(element_counter, widget);
         devices.push_back(widget);
         show();
         break;
     }
     case Premium:
     {
-        auto widget = new DeviceCard("test", element_counter, state, usecase_, this);
+        auto widget = new DeviceCard(name, element_counter, state, usecase_, this);
         widget->setFixedSize(200,250);
-        ui->add_layout->insertWidget(element_counter, widget);
+        widget->setMaximumSize(200,250);
+        widget->age = age;
+        widget->weight = weight;
+        layoutwidget->insertWidget(element_counter, widget);
         devices.push_back(widget);
         show();
         break;
@@ -275,16 +356,22 @@ void MainWindow::createDevice(State state)
 
 void MainWindow::refresh_graph()
 {
+    ui->kcal_label->setText(QString::number(devices[id]->kcal) + "  kcal");
     switch(type)
     {
     case Standard:
-        plot(scene_pulse, axis_pen, pulse_graph_pen, grid_pen, 60, 150, time - 20, time + 20, devices[id]->pulse_points, time, counter);
+        plot(scene_pulse, axis_pen, pulse_graph_pen, grid_pen, 60, 200, time - 20, time + 20, devices[id]->pulse_points, time, counter);
         plot(scene_O2, axis_pen, O2_graph_pen, grid_pen, 70, 130, time - 20, time + 20, devices[id]->O2_points, time, counter);
         plot(scene_temprature, axis_pen, temprature_graph_pen, grid_pen, 30, 45, time - 20, time + 20, devices[id]->temprature_points, time, counter);
         scene_ECG->clear();
         ui->ECG_pic->setVisible(false);
         ui->pulse_pic->setVisible(true);
         ui->O2_pic->setVisible(true);
+        ui->ECG_graph_label->setVisible(false);
+        ui->pulse_graph_label->setVisible(true);
+        ui->oxygen_graph_label->setVisible(true);
+        ui->temprature_graph_label->setVisible(true);
+        ui->temprature_pic->setVisible(true);
         break;
     case Intensive:
         plot(scene_temprature, axis_pen, temprature_graph_pen, grid_pen, 30, 45, time - 20, time + 20, devices[id]->temprature_points, time, counter);
@@ -294,15 +381,25 @@ void MainWindow::refresh_graph()
         ui->pulse_pic->setVisible(false);
         ui->O2_pic->setVisible(false);
         ui->ECG_pic->setVisible(true);
+        ui->pulse_graph_label->setVisible(false);
+        ui->oxygen_graph_label->setVisible(false);
+        ui->ECG_graph_label->setVisible(true);
+        ui->temprature_graph_label->setVisible(true);
+        ui->temprature_pic->setVisible(true);
         break;
     case Premium:
-        plot(scene_pulse, axis_pen, pulse_graph_pen, grid_pen, 60, 150, time - 20, time + 20, devices[id]->pulse_points, time, counter);
+        plot(scene_pulse, axis_pen, pulse_graph_pen, grid_pen, 60, 200, time - 20, time + 20, devices[id]->pulse_points, time, counter);
         plot(scene_O2, axis_pen, O2_graph_pen, grid_pen, 70, 130, time - 20, time + 20, devices[id]->O2_points, time, counter);
         plot(scene_temprature, axis_pen, temprature_graph_pen, grid_pen, 30, 45, time - 20, time + 20, devices[id]->temprature_points, time, counter);
         plot(scene_ECG, axis_pen, temprature_graph_pen, grid_pen, 0, 45, time - 20, time + 20, devices[id]->ECG_points, time, counter);
         ui->ECG_pic->setVisible(true);
         ui->pulse_pic->setVisible(true);
         ui->O2_pic->setVisible(true);
+        ui->ECG_graph_label->setVisible(true);
+        ui->pulse_graph_label->setVisible(true);
+        ui->oxygen_graph_label->setVisible(true);
+        ui->temprature_graph_label->setVisible(true);
+        ui->temprature_pic->setVisible(true);
         break;
     }
 }

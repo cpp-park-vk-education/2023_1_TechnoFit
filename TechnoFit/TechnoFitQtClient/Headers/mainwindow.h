@@ -7,9 +7,11 @@
 #include "header.h"
 #include "../UseCase/IMetricsUseCase.h"
 #include "IMetricsUI.h"
+#include "HorizontalScrollArea.h"
 #include "dialog.h"
 #include "../Sources/ui_dialog.h"
 #include "../UseCase/MetricsUseCase.h"
+#include "Metrics.h"
 #include "DeviceCard.h"
 #include <memory>
 #include <QPainter>
@@ -36,9 +38,10 @@ public:
     void setUseCase(IMetricsUseCase* usecase);
     void setDialog(Dialog* dialog_);
     void startrefresh();
-    void createDevice(State state) override;
+    void createDevice(State state, QString name, int age, float weight) override;
     void change_graph(int id, State type) override;
     void refresh_graph();
+    void refresh_zone();
 private slots:
     void on_add_device_btn_clicked();
 public slots:
@@ -63,4 +66,5 @@ private:
     int counter = 0;
     int element_counter = 0;
     bool builded = false;
+    HorizontalScrollArea* layoutwidget;
 };

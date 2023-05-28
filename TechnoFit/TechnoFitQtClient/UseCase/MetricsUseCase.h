@@ -28,7 +28,7 @@ public:
     }
     void OnFetchStatistics(IDevice& device) override;
     void RefreshData(int user_id, State state) override;
-    void createDevice(State state) override;
+    void createDevice(State type, QString name, int age, float weight) override;
     void change_graph(int id, State type) override;
 private:
     IMetricsUI* ui;

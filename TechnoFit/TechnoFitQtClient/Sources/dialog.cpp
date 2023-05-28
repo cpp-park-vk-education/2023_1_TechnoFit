@@ -6,8 +6,6 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-
-
 }
 
 Dialog::~Dialog()
@@ -34,8 +32,10 @@ void Dialog::on_buttonBox_accepted()
         state = Premium;
         std::cout << "Premium" << std::endl;
     }
-        
-    usecase_->createDevice(state);
+    auto name = ui->name_textbox->text();
+    int age = (ui->age_textbox->text()).toInt();
+    float weight = (ui->weight_textbox->text()).toFloat();
+    usecase_->createDevice(state, name, age, weight);
     close();
 }
 

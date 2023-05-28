@@ -19,7 +19,7 @@ std::string DataBaseDriver::get(std::string query, int id)
     {
         std::random_device random_device;
         std::mt19937 generator(random_device());
-        std::uniform_int_distribution<> distribution_for_pulse(60, 150);
+        std::uniform_int_distribution<> distribution_for_pulse(72, 180);
         std::uniform_int_distribution<> distribution_for_O2(80, 100);
         std::uniform_int_distribution<> distribution_for_temprature(35, 40);
         std::uniform_int_distribution<> distribution_for_ECG(0, 40);
@@ -35,7 +35,7 @@ std::string DataBaseDriver::get(std::string query, int id)
     {
         std::random_device random_device;
         std::mt19937 generator(random_device());
-        std::uniform_int_distribution<> distribution_for_pulse(60, 150);
+        std::uniform_int_distribution<> distribution_for_pulse(72, 180);
         std::uniform_int_distribution<> distribution_for_O2(80, 100);
         std::uniform_int_distribution<> distribution_for_temprature(35, 40);
         std::string pulse = std::to_string(distribution_for_pulse(generator));
@@ -55,6 +55,7 @@ std::string DataBaseDriver::get(std::string query, int id)
     }
     return reply;
 }
+
 void DataBaseDriver::save()
 {
     

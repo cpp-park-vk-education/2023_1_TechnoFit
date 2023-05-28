@@ -13,9 +13,9 @@ void MetricsUseCase::OnFetchStatistics(IDevice& device)
 }
 
 
-void MetricsUseCase::createDevice(State state)
+void MetricsUseCase::createDevice(State type, QString name, int age, float weight)
 {
-   ui->createDevice(state);
+   ui->createDevice(type, name, age, weight);
 }
 
 void MetricsUseCase::change_graph(int id, State type)

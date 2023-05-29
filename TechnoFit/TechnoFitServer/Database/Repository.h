@@ -1,0 +1,18 @@
+#pragma once
+#include "IRepository.h"
+#include "IDataBaseDriver.h"
+
+
+class Repository : public IRepository
+{
+public:
+    std::string formClientQuery(std::vector<unsigned char>& id, std::vector<unsigned char>& type) override;
+    std::string formDeviceQuery(std::vector<unsigned char>& request) override;
+    std::string formMLQuery(std::vector<unsigned char>& request) override;
+    void setDatabaseDriver(IDataBaseDriver* databasedriver)
+    {
+        databasedriver_ = databasedriver;
+    }
+private:
+    IDataBaseDriver* databasedriver_;
+};

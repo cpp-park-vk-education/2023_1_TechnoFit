@@ -13,6 +13,7 @@ public:
     void connect() override;
     void close() override;
     std::vector<double> get_n(std::string query) override;
+    double get_pulse(std::string query) override;
     std::string get(std::string query) override;
     void save() override;
 private:

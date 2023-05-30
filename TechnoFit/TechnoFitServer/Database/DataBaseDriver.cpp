@@ -18,6 +18,24 @@ std::string DataBaseDriver::get(std::string query)
     return reply;
 }
 
+double DataBaseDriver::get_pulse(std::string query) {
+  std::ifstream file("/home/dzhavid/untitled3/data.txt");
+
+  int min_pulse = std::numeric_limits<int>::max();
+  std::string line;
+  while (std::getline(file, line)) {
+    std::istringstream iss(line);
+    int pulse;
+    iss >> pulse;
+    if (pulse >= 50 && pulse < min_pulse) {
+      min_pulse = pulse;
+    }
+  }
+
+  file.close();
+  return min_pulse;
+}
+
 std::vector<double> DataBaseDriver::get_n(std::string query){
   std::string filename = "/home/dzhavid/untitled3/data.txt";
   std::vector<double> data;

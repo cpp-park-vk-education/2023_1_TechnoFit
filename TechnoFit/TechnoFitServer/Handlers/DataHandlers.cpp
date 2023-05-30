@@ -1,5 +1,5 @@
 #include "DataHandlers.h"
-#include "Ml.h"
+#include "Metrics.h"
 #include <iostream>
 
 void DeviceDataHandler::service(IRequest &request, IResponse &response)
@@ -31,7 +31,6 @@ void ClientMLHandler::service(IRequest &request, IResponse &response)
 {
 
     std::vector<double> data = usecase_->ProcessMLRequest();
-
     // получает запрос от клиента на прогнозирование данных 
     Ml ans = *new Ml(data);
     std::string reply = std::to_string(ans.pulse_predict()) + " " + std::to_string(ans.O2_predict()) + " " + std::to_string(ans.temperarute_predict());

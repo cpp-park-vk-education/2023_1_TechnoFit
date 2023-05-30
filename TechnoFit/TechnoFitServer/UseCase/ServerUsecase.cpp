@@ -16,3 +16,7 @@ std::string ServerUsecase::ProcessDeviceRequest(std::vector<unsigned char>& requ
 {
   return repository_->formDeviceQuery(request);
 }
+
+double ServerUsecase::ProcessPulseRequest(std::vector<unsigned char> &request) {
+  return repository_->formPulseQuery();
+}

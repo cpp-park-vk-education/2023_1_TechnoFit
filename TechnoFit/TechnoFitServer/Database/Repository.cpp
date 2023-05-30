@@ -21,3 +21,8 @@ std::vector<double> Repository::formMLQuery(std::vector<unsigned char>& request)
   std::string query = "here should be query";
   return databasedriver_->get_n(query);
 }
+
+double Repository::formPulseQuery(std::vector<unsigned char> &request) {
+  std::string query = "here should be query";
+  return databasedriver_->get_pulse();
+}
